@@ -9,12 +9,12 @@ class FIFOCache(BaseCaching):
     """BasicCache class"""
 
     def __init__(self):
-        """"""
+        """constructor"""
         super().__init__()
         self.order = []
 
     def put(self, key, item):
-        """"""
+        """value for the key key"""
         if key is not None and item is not None:
             self.order.append(key)
         if key in self.cache_data:
@@ -28,7 +28,7 @@ class FIFOCache(BaseCaching):
             self.cache_data[key] = item
 
     def get(self, key):
-        """"""
+        """return value key in self.cache_data"""
         if key in self.cache_data:
             return self.cache_data[key]
         return None
