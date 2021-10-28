@@ -5,7 +5,7 @@
 from typing import Tuple
 
 
-def index_range(page, page_size: int) -> tuple:
+def index_range(page, page_size: int):
     """"""
     previous = (page - 1) * page_size
     return (previous, previous + page_size)
