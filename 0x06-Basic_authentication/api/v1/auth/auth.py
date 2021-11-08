@@ -24,7 +24,7 @@ class Auth:
         return True
 
     def authorization_header(self, request=None) -> str:
-        """authorization header"""
+        """Request Validation"""
         if request:
             return request.headers.get('Authorization')
         return None
