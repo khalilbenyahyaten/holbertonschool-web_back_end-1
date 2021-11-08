@@ -10,7 +10,11 @@ class Auth:
     """defines the Auth class"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """require auth"""
+        """
+        True if the path is `None`, `excluded_paths` is `None` or if the
+        `path` is not in the list of strings `excluded_paths`,
+        False otherwise.
+        """
         if path and excluded_paths:
             for ex_path in excluded_paths:
                 if ex_path.endswith('/') or ex_path.endswith('*'):
