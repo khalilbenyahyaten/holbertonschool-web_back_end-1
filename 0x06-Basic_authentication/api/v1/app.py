@@ -54,8 +54,7 @@ def not_found(error) -> str:
 
 @app.errorhandler(401)
 def unauthorized(error) -> str:
-    """client request has not been completed
-    """
+    """client request has not been completed"""
     return jsonify({"error": "Unauthorized"}), 401
 
 
