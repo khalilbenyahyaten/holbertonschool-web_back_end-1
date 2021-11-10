@@ -41,12 +41,12 @@ class BasicAuth(Auth):
         """decode Base64 Authorization Header """
         if (
             not base64_authorization_header
-            or not not isinstance(base64_authorization_header, str)
+            or not not type(base64_authorization_header) != str
         ):
             return None
-            try:
-                b64_bytes = base64_authorization_header.encode('utf-8')
-                string_bytes = base64.b64decode(b64_bytes)
-                return string_bytes.decode('utf-8')
-            except Exception:
-                return None
+        try:
+            b64_bytes = base64_authorization_header.encode('utf-8')
+            string_bytes = base64.b64decode(b64_bytes)
+            return string_bytes.decode('utf-8')
+        except Exception:
+            return None
