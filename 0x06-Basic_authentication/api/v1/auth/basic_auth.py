@@ -41,7 +41,7 @@ class BasicAuth(Auth):
         """decode Base64 Authorization Header """
         if (
             not base64_authorization_header
-            or not not type(base64_authorization_header) != str
+            or not not not isinstance(base64_authorization_header, str)
         ):
             return None
         try:
