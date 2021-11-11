@@ -2,7 +2,6 @@
 """Basic auth"""
 
 import base64
-import typing
 from api.v1.auth.auth import Auth
 from typing import TypeVar
 from models.user import User
@@ -83,3 +82,11 @@ class BasicAuth(Auth):
         if user and user[0].is_valid_password(user_pwd):
             return user[0]
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """Complete Basic authentication"""
+        data = self.authorization_header(request)
+        pwd = self.extract_base64_authorization_header(data)
+        decoded = self.decode_base64_authorization_header(pwd)
+        usr, pwd = self.extract_user_credentials(decoded)
+        return self.user_object_from_credentials(pwd, usr)
