@@ -2,7 +2,9 @@
 """Basic auth"""
 
 import base64
+import typing
 from api.v1.auth.auth import Auth
+from typing import TypeVar, Iterable
 
 
 class BasicAuth(Auth):
@@ -50,3 +52,15 @@ class BasicAuth(Auth):
             return string_bytes.decode('utf-8')
         except Exception:
             return None
+
+    def extract_user_credentials(self,
+                                 decoded_base64_authorization_header: str
+                                 ) -> (str, str):
+        """ Extract User Credentials """
+        if (
+            not decoded_base64_authorization_header
+            or not isinstance(decoded_base64_authorization_header, str)
+            or ':' not in decoded_base64_authorization_header
+        ):
+            return None, None
+        return tuple(decoded_base64_authorization_header.split(':', 1))
