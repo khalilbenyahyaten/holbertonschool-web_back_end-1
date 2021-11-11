@@ -4,7 +4,8 @@
 import base64
 import typing
 from api.v1.auth.auth import Auth
-from typing import TypeVar, Iterable
+from typing import TypeVar
+from models.user import User
 
 
 class BasicAuth(Auth):
@@ -64,3 +65,21 @@ class BasicAuth(Auth):
         ):
             return None, None
         return tuple(decoded_base64_authorization_header.split(':', 1))
+
+    def user_object_from_credentials(self,
+                                     user_email: str, user_pwd: str
+                                     ) -> TypeVar('User'):
+        """ User Object From Credentials """
+        if (
+            not user_email or not isinstance(user_email, str)
+            or not user_pwd or not isinstance(user_pwd, str)
+        ):
+            return None
+        try:
+            user = User.search({'email': user_email})
+        except Exception:
+            return None
+
+        if user and user[0].is_valid_password(user_pwd):
+            return user[0]
+        return None
