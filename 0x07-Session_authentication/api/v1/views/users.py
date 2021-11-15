@@ -131,5 +131,15 @@ def get(user_id: str = None) -> str:
     if user is None:
         abort(404)
     rq = None
-
+    try:
+        rq = request.get_json()
+    except Exception as e:
+        rq = None
+    if rq is None:
+        return jsonify({'error': "Wrong format"}), 400
+    if rq.get('first_name') is not None:
+        user.first_name = rq.get('first_name')
+    if rq.get('last_name') is not None:
+        user.last_name = rq.get('last_name')
+    user.save()
     return jsonify(user.to_json()), 200
