@@ -120,3 +120,16 @@ def update_user(user_id: str = None) -> str:
         user.last_name = rj.get('last_name')
     user.save()
     return jsonify(user.to_json()), 200
+
+
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def get(user_id: str = None) -> str:
+    """"""
+    if user_id is None:
+        abort(404)
+        user = User.get(user_id)
+    if user is None:
+        abort(404)
+    rq = None
+
+    return jsonify(user.to_json()), 200
