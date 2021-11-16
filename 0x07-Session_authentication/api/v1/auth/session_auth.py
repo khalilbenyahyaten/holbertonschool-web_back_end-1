@@ -23,3 +23,13 @@ class SessionAuth(Auth):
         if not isinstance(session_id, str):
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """cookie value"""
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_id)
+
+        try:
+            return User.get(id=user_id)
+        except KeyError:
+            return None
