@@ -4,25 +4,22 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.session import Session
 
 from user import Base, User
 
 
 class DB:
-    """DB class
-    """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db")
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
 
     @property
-    def _session(self) -> Session:
+    def _session(self):
         """Memoized session object
         """
         if self.__session is None:
@@ -38,3 +35,8 @@ class DB:
         self._session.add(user)
         self._session.commit()
         return user
+
+    def find_user_by(self, **kwargs) -> User:
+        """find user"""
+        results = self._session.query(User).filter_by(**kwargs)
+        return results.one()
