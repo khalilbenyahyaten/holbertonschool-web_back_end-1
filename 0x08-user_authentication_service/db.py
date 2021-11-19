@@ -45,7 +45,7 @@ class DB:
         """update user"""
         DBSession = self._session
 
-        user = self._session.query(User).filter_by(id=user_id).one()
+        user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
             if hasattr(user, key) is False:
                 raise ValueError
