@@ -40,3 +40,14 @@ class DB:
         """find user"""
         results = self._session.query(User).filter_by(**kwargs)
         return results.one()
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """update user"""
+        DBSession = self._session
+
+        user = self._session.query(User).filter_by(id=user_id).one()
+        for key, value in kwargs.items():
+            if hasattr(user, key) is False:
+                raise ValueError
+            setattr(user, key, value)
+        DBSession.commit()
