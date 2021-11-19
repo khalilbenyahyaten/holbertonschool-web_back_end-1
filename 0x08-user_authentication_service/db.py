@@ -43,11 +43,10 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """update user"""
-        DBSession = self._session
 
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
             if hasattr(user, key) is False:
                 raise ValueError
             setattr(user, key, value)
-        DBSession.commit()
+        self._session.commit()
