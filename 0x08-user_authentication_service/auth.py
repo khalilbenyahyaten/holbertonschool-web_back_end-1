@@ -4,6 +4,7 @@ takes in a password and returns a hashed password
 """
 import hashlib
 import bcrypt
+import uuid import uuid4
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -45,3 +46,7 @@ class Auth:
             return True
         except NoResultFound:
             return False
+
+    def _generate_uuid() -> str:
+        """generates uuid"""
+        return str(uuid.uuid4())
