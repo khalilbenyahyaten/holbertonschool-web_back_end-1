@@ -4,7 +4,7 @@ takes in a password and returns a hashed password
 """
 import hashlib
 import bcrypt
-import uuid import uuid4
+from uuid import uuid4
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
