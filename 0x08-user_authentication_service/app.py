@@ -5,8 +5,9 @@ Flask app
 from flask import Flask, jsonify, request, abort, make_response, json, redirect
 from auth import Auth
 
-app = Flask(__name__)
+AUTH = Auth()
 
+app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def idex():
@@ -21,7 +22,7 @@ def users():
     password = request.form.get('password')
 
     try:
-        user = Auth.register_user(email, password)
+        user = AUTH.register_user(email, password)
         return jsonify({"email": "{}".format(user.email),
                         "message": "user created"})
     except ValueError:
@@ -34,9 +35,9 @@ def login():
     email = request.form.get['email']
     password = request.form.get['password']
 
-    if Auth.valid_login(email, password) is False:
+    if AUTH.valid_login(email, password) is False:
         abort(401)
-    session_id = Auth.create_session(email)
+    session_id = AUTH.create_session(email)
     resp = make_response({"email": email, "message": "logged in"})
     resp.set_cookie('session_id', session_id)
     return resp
@@ -46,10 +47,10 @@ def login():
 def logout():
     """logout"""
     session_id = request.cookies.get("session_id")
-    user = Auth.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
     if user is None:
         abort(403)
-    Auth.destroy_session(user.id)
+    AUTH.destroy_session(user.id)
     return redirect("/")
 
 
