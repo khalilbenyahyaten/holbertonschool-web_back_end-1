@@ -7,7 +7,7 @@ import bcrypt
 from uuid import uuid4
 from sqlalchemy import exc
 
-from sqlalchemy.sql.functions import user
+from sqlalchemy.sql.functions import session_user, user
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -74,12 +74,10 @@ class Auth:
         except NoResultFound:
             return None
 
-    def destroy_session(self, user_id: int) -> int:
+    def destroy_session(self, user_id: int) -> None:
         """destroy"""
-        if user_id is None:
-            return None
         try:
-            user = self._db.find_user_by(user_id=user_id)
-            return None
+            user = self._db.find_user_by(id=user_id)
+            self._db.update_user(user_id, session_id=None)
         except NoResultFound:
             return None
