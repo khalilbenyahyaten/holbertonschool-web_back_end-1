@@ -5,6 +5,9 @@ takes in a password and returns a hashed password
 import hashlib
 import bcrypt
 from uuid import uuid4
+from sqlalchemy import exc
+
+from sqlalchemy.sql.functions import user
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -68,5 +71,15 @@ class Auth:
         try:
             user = self._db.find_user_by(session_id=session_id)
             return user
+        except NoResultFound:
+            return None
+
+    def destroy_session(self, user_id: int) -> int:
+        """"""
+        if user_id is None:
+            return None
+        try:
+            user = self._db.find_user_by(user_id=user_id)
+            return None
         except NoResultFound:
             return None
