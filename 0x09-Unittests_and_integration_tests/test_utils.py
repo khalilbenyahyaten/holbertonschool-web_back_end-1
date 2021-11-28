@@ -43,12 +43,15 @@ class TestGetJson(unittest.TestCase):
             self.assertEqual(actual_result, payload)
             mock.json.assert_called_once()
 
+
 class TestMemoize(unittest.TestCase):
     """class testing utils"""
+
     def test_memoize(self):
         """test"""
         class TestClass:
             """test class"""
+
             def a_method(self):
                 return 42
 
@@ -62,4 +65,3 @@ class TestMemoize(unittest.TestCase):
             result = test.a_property
             self.assertEqual(result, test.a_property)
             a_method.assert_called_once()
-    
