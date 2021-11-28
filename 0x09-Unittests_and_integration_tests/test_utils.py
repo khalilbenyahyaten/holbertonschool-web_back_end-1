@@ -42,3 +42,24 @@ class TestGetJson(unittest.TestCase):
             actual_result = get_json(url)
             self.assertEqual(actual_result, payload)
             mock.json.assert_called_once()
+
+class TestMemoize(unittest.TestCase):
+    """class testing utils"""
+    def test_memoize(self):
+        """test"""
+        class TestClass:
+            """test class"""
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method', return_value=42) as a_method:
+            test = TestClass()
+            test.a_property
+            result = test.a_property
+            self.assertEqual(result, test.a_property)
+            a_method.assert_called_once()
+    
