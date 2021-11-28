@@ -11,6 +11,7 @@ class Config():
     """config lang"""
     LANGUAGES = ["en", "fr"]
 
+
 app = Flask(__name__)
 app.config.from_object(Config())
 Babel.default_locale = "en"
