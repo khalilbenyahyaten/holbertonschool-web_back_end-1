@@ -51,3 +51,36 @@ class TestGithubOrgClient(unittest.TestCase):
 
 @parameterized_class(("org_payload", "repos_payload", "expected_repos",
                       "apache2_repos"), TEST_PAYLOAD)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """ Integration tests """
+    @classmethod
+    def setUpClass(cls):
+        """ Class method for setup """
+        custom_payload = [cls.org_payload,
+                          cls.repos_payload,
+                          cls.org_payload,
+                          cls.repos_payload]
+        cls.get_patcher = patch('requests.get')
+        cls.patcher = cls.get_patcher.start()
+        cls.patcher.return_value.json.side_effect = custom_payload
+
+    def test_public_repos(self):
+        """ Test method """
+        client = GithubOrgClient('google')
+        result = client.public_repos()
+        self.assertEqual(result, self.expected_repos)
+
+    def test_public_repos_with_license(self):
+        """ Test method """
+        client = GithubOrgClient('google')
+        self.assertEqual(client.public_repos("apache-2.0"),
+                         self.apache2_repos)
+
+    @classmethod
+    def tearDownClass(cls):
+        """ Class method for tearDown """
+        cls.patcher.stop()
+
+
+if __name__ == "__main__":
+    unittest.main()
