@@ -42,3 +42,12 @@ class TestGithubOrgClient(unittest.TestCase):
                             "my_license", True),
                            ({"license": {"key": "other_license"}},
                             "my_license", False)])
+    def test_has_license(self, repo, license_key, expected):
+        """ tests has_license class method """
+        client = GithubOrgClient('abc')
+        result = client.has_license(repo, license_key)
+        self.assertEqual(result, expected)
+
+
+@parameterized_class(("org_payload", "repos_payload", "expected_repos",
+                      "apache2_repos"), TEST_PAYLOAD)
