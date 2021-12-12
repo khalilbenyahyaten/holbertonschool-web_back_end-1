@@ -7,6 +7,8 @@ from uuid import uuid4
 
 
 class Cache:
+    """redis cache class"""
+
     def __init__(self):
         """stores a private instance of redis"""
         self._redis = redis.Redis()
