@@ -4,6 +4,7 @@ Create Cache
 """
 import redis
 from uuid import uuid4
+from typing import Callable
 
 
 class Cache:
@@ -20,3 +21,18 @@ class Cache:
         random_key = str(random_key)
         self._redis.mset({random_key: data})
         return random_key
+
+    def get(self, key: str, fn: callable = None):
+        """recovering original type"""
+        value = self._redis.get(key)
+        if fn is not None:
+            return fn(value)
+        return value
+
+    def get_str(self, key: str, data: bytes) -> str:
+        """parametrize Cache.get with the correct conversion function"""
+        return self.get(key, str)
+
+    def get_int(self, key: str, data: bytes) -> int:
+        """parametrize Cache.get with the correct conversion function"""
+        return self.get(key, int)
