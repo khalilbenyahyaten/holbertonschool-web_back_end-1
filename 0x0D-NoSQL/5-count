@@ -1,0 +1,2 @@
+// a mongo script
+db.school.count()
