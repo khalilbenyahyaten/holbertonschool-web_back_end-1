@@ -1,0 +1,2 @@
+// mongo script
+db.school.findOne({name: "Holberton school"})
