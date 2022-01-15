@@ -1,0 +1,2 @@
+// Insert in database
+db.school.insert({name: "Holberton school"})
