@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ Basic Redis
+
 """
 
 from typing import Union, Callable
