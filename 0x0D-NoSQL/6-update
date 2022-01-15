@@ -1,0 +1,5 @@
+// a mongo script
+db.school.findOneAndUpdate(
+        {name: "Holberton school"},
+        {$set: {address: “972 Mission street”}}
+    )
